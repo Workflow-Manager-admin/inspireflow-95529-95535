@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import quotes from './data/quotes';
+import QuoteBox from './components/QuoteBox';
+import NewQuoteButton from './components/NewQuoteButton';
 
 function App() {
+  // State to hold the current quote
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+  
+  // Function to get a random quote index
+  const getRandomQuoteIndex = () => {
+    const newIndex = Math.floor(Math.random() * quotes.length);
+    // Make sure we don't get the same quote twice in a row
+    return newIndex === currentQuoteIndex && quotes.length > 1 
+      ? (newIndex + 1) % quotes.length 
+      : newIndex;
+  };
+  
+  // Function to generate a new quote
+  const generateNewQuote = () => {
+    setFadeIn(false);
+    // Small delay for the fade out animation before changing quote
+    setTimeout(() => {
+      setCurrentQuoteIndex(getRandomQuoteIndex());
+      setFadeIn(true);
+    }, 300);
+  };
+  
+  // Get a random quote when the component mounts
+  useEffect(() => {
+    setCurrentQuoteIndex(getRandomQuoteIndex());
+  }, []);
+
   return (
     <div className="app">
       <nav className="navbar">
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
             <div className="logo">
-              <span className="logo-symbol">*</span> KAVIA AI
+              <span className="logo-symbol">✧</span> InspireFlow
             </div>
-            <button className="btn">Template Button</button>
           </div>
         </div>
       </nav>
@@ -18,15 +48,24 @@ function App() {
       <main>
         <div className="container">
           <div className="hero">
-            <div className="subtitle">AI Workflow Manager Template</div>
+            <div className="subtitle">Daily Inspiration</div>
             
-            <h1 className="title">main_container_for_inspireflow</h1>
+            <h1 className="title">InspireFlow</h1>
             
             <div className="description">
-              Start building your application.
+              Discover wisdom and motivation with our curated collection of inspirational quotes.
             </div>
             
-            <button className="btn btn-large">Button</button>
+            <div className={`quote-container ${fadeIn ? 'fade-in' : 'fade-out'}`}>
+              {quotes.length > 0 && (
+                <QuoteBox 
+                  quote={quotes[currentQuoteIndex].text} 
+                  author={quotes[currentQuoteIndex].author} 
+                />
+              )}
+            </div>
+            
+            <NewQuoteButton onClick={generateNewQuote} />
           </div>
         </div>
       </main>
