@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import quotes from './data/quotes';
 import QuoteBox from './components/QuoteBox';
@@ -9,14 +9,14 @@ function App() {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);
   
-  // Function to get a random quote index
-  const getRandomQuoteIndex = () => {
+  // Function to get a random quote index with useCallback to prevent recreation on each render
+  const getRandomQuoteIndex = useCallback(() => {
     const newIndex = Math.floor(Math.random() * quotes.length);
     // Make sure we don't get the same quote twice in a row
     return newIndex === currentQuoteIndex && quotes.length > 1 
       ? (newIndex + 1) % quotes.length 
       : newIndex;
-  };
+  }, [currentQuoteIndex]);
   
   // Function to generate a new quote
   const generateNewQuote = () => {
@@ -30,6 +30,7 @@ function App() {
   
   // Get a random quote when the component mounts
   useEffect(() => {
+    // When the component mounts, initialize with a random quote
     setCurrentQuoteIndex(getRandomQuoteIndex());
   }, [getRandomQuoteIndex]);
 
