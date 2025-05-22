@@ -31,7 +31,7 @@ function App() {
   // Get a random quote when the component mounts
   useEffect(() => {
     setCurrentQuoteIndex(getRandomQuoteIndex());
-  }, []);
+  }, [getRandomQuoteIndex]);
 
   return (
     <div className="app">
