@@ -107,3 +107,19 @@ body {
   padding: 12px 24px;
   font-size: 1.1rem;
 }
+
+.quote-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
