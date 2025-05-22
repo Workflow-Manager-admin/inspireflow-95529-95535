@@ -1,0 +1,24 @@
+.quote-button {
+  background-color: var(--kavia-orange);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 12px 28px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(232, 122, 65, 0.3);
+  outline: none;
+}
+
+.quote-button:hover {
+  background-color: #ff8c4d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(232, 122, 65, 0.4);
+}
+
+.quote-button:active {
+  transform: translateY(0);
+  background-color: #d86a31;
+}
